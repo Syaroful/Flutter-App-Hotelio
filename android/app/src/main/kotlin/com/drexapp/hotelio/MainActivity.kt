@@ -1,4 +1,4 @@
-package com.example.hotelio
+package com.drexapp.hotelio
 
 import io.flutter.embedding.android.FlutterActivity
 
