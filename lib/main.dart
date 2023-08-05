@@ -6,6 +6,7 @@ import 'package:hotelio/config/app_color.dart';
 import 'package:hotelio/config/session.dart';
 import 'package:hotelio/page/home_page.dart';
 import 'package:hotelio/page/intro_page.dart';
+import 'package:hotelio/page/signin_page.dart';
 import 'package:intl/date_symbol_data_local.dart';
 
 import 'config/app_route.dart';
@@ -51,7 +52,7 @@ class MyApp extends StatelessWidget {
           },
           AppRoute.intro: (context) => const IntroPage(),
           AppRoute.home: (context) => HomePage(),
-          AppRoute.signin: (context) => IntroPage(),
+          AppRoute.signin: (context) => SigninPage(),
           AppRoute.detail: (context) => IntroPage(),
           AppRoute.checkout: (context) => const IntroPage(),
           AppRoute.checkoutSuccess: (context) => const IntroPage(),
