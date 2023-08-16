@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:hotelio/config/app_format.dart';
 
 import '../config/app_asset.dart';
 import '../config/app_color.dart';
+import '../controller/c_nearby.dart';
+import '../model/hotel.dart';
 
 class NearbyPage extends StatelessWidget {
-  const NearbyPage({super.key});
+  NearbyPage({Key? key}) : super(key: key);
+  final cNearby = Get.put(CNearby());
 
   @override
   Widget build(BuildContext context) {
@@ -15,8 +20,136 @@ class NearbyPage extends StatelessWidget {
         const SizedBox(height: 20),
         searchField(),
         const SizedBox(height: 30),
+        categories(),
+        const SizedBox(height: 30),
+        GetBuilder<CNearby>(builder: (_) {
+          List<Hotel> list = _.category == 'All Place'
+              ? _.listHotel
+              : _.listHotel
+                  .where((e) => e.category == cNearby.category)
+                  .toList();
+          if (list.isEmpty) return const Center(child: Text('No data'));
+          return ListView.builder(
+            itemCount: list.length,
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            itemBuilder: (context, index) {
+              Hotel hotel = list[index];
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  ClipRRect(
+                    borderRadius: const BorderRadius.only(
+                      topLeft: Radius.circular(20),
+                      topRight: Radius.circular(20),
+                    ),
+                    child: AspectRatio(
+                      aspectRatio: 16 / 9,
+                      child: Image.network(
+                        hotel.cover,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              hotel.name,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleMedium!
+                                  .copyWith(
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                            const SizedBox(height: 4),
+                            Row(
+                              children: [
+                                Text(
+                                  'Start from ',
+                                  style: TextStyle(
+                                    color: Colors.grey,
+                                    fontSize: 13,
+                                  ),
+                                ),
+                                Text(
+                                  AppFormat.currency(hotel.price.toDouble()),
+                                  style: const TextStyle(
+                                    color: AppColor.secondary,
+                                    fontSize: 13,
+                                    fontWeight: FontWeight.w900,
+                                  ),
+                                ),
+                                Text(
+                                  '/night',
+                                  style: TextStyle(
+                                    color: Colors.grey,
+                                    fontSize: 13,
+                                  ),
+                                ),
+                              ],
+                            )
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              );
+            },
+          );
+        }),
       ],
     );
+  }
+
+  GetBuilder<CNearby> categories() {
+    return GetBuilder<CNearby>(builder: (_) {
+      return SizedBox(
+        height: 45,
+        child: ListView.builder(
+          itemCount: _.categories.length,
+          scrollDirection: Axis.horizontal,
+          itemBuilder: (context, index) {
+            String category = _.categories[index];
+            return Padding(
+              padding: EdgeInsets.fromLTRB(
+                index == 0 ? 16 : 8,
+                0,
+                index == cNearby.categories.length - 1 ? 16 : 8,
+                0,
+              ),
+              child: Material(
+                color: category == _.category ? AppColor.primary : Colors.white,
+                borderRadius: BorderRadius.circular(20),
+                child: InkWell(
+                  borderRadius: BorderRadius.circular(20),
+                  onTap: () {
+                    cNearby.category = category;
+                  },
+                  child: Container(
+                    alignment: Alignment.center,
+                    padding: const EdgeInsets.symmetric(horizontal: 30),
+                    child: Text(
+                      category,
+                      style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                            fontWeight: FontWeight.w500,
+                          ),
+                    ),
+                  ),
+                ),
+              ),
+            );
+          },
+        ),
+      );
+    });
   }
 
   Container searchField() {
