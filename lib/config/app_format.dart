@@ -1,7 +1,7 @@
 import 'package:intl/intl.dart';
 
 class AppFormat {
-  static String data(String stringDate) {
+  static String date(String stringDate) {
     //2023-08-04
     DateTime dateTime = DateTime.parse(stringDate);
     return DateFormat('d MMM yyyy', 'id').format(dateTime); // 4 Aug 2023

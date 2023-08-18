@@ -1,13 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:hotelio/config/app_asset.dart';
 import 'package:hotelio/config/app_color.dart';
 import 'package:hotelio/config/app_format.dart';
+import 'package:hotelio/config/app_route.dart';
 import 'package:hotelio/widget/button_custom.dart';
 
+import '../controller/c_user.dart';
+import '../model/booking.dart';
 import '../model/hotel.dart';
+import '../source/booking_source.dart';
 
 class DetailPage extends StatelessWidget {
   DetailPage({Key? key}) : super(key: key);
+
+  final cUser = Get.put(CUser());
+
+  final Rx<Booking> _bookedData = initBooking.obs;
+  Booking get bookedData => _bookedData.value;
+  set bookedData(Booking n) => _bookedData.value = n;
 
   final List facilities = [
     {
@@ -31,6 +42,9 @@ class DetailPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Hotel hotel = ModalRoute.of(context)!.settings.arguments as Hotel;
+    BookingSource.checkIsBooked(cUser.data.id!, hotel.id).then((bookingValue) {
+      bookedData = bookingValue ?? initBooking;
+    });
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -45,42 +59,11 @@ class DetailPage extends StatelessWidget {
         ),
         centerTitle: true,
       ),
-      bottomNavigationBar: Container(
-        decoration: BoxDecoration(
-          color: Colors.white,
-          border: Border(
-            top: BorderSide(
-              color: Colors.grey[200]!,
-              width: 1.5,
-            ),
-          ),
-        ),
-        height: 80,
-        padding: const EdgeInsets.fromLTRB(16, 12, 16, 8),
-        child: Row(
-          children: [
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    AppFormat.currency(hotel.price.toDouble()),
-                    style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                          color: AppColor.secondary,
-                          fontWeight: FontWeight.w900,
-                        ),
-                  ),
-                  const Text(
-                    'per night',
-                    style: TextStyle(color: Colors.grey),
-                  ),
-                ],
-              ),
-            ),
-            ButtonCustom(label: 'Booking Now', onTap: () {})
-          ],
-        ),
-      ),
+      // bottomNavigationBar: bookingNow(hotel, context),
+      bottomNavigationBar: Obx(() {
+        if (bookedData.id == '') return bookingNow(hotel, context);
+        return viewReceipt();
+      }),
       body: Container(
         decoration: const BoxDecoration(
           color: Colors.white,
@@ -129,6 +112,95 @@ class DetailPage extends StatelessWidget {
             const SizedBox(height: 20),
           ],
         ),
+      ),
+    );
+  }
+
+  Container viewReceipt() {
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        border: Border(
+          top: BorderSide(color: Colors.grey[100]!, width: 1.5),
+        ),
+      ),
+      height: 80,
+      padding: const EdgeInsets.fromLTRB(16, 12, 16, 8),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          const Text(
+            'You booked this.',
+            style: TextStyle(color: Colors.grey),
+          ),
+          Material(
+            borderRadius: BorderRadius.circular(20),
+            color: AppColor.secondary,
+            child: InkWell(
+              borderRadius: BorderRadius.circular(20),
+              onTap: () {},
+              child: const Padding(
+                padding: EdgeInsets.symmetric(
+                  horizontal: 36,
+                  vertical: 14,
+                ),
+                child: Text(
+                  'View Receipt',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 16,
+                    fontWeight: FontWeight.w900,
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Container bookingNow(Hotel hotel, BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        border: Border(
+          top: BorderSide(
+            color: Colors.grey[200]!,
+            width: 1.5,
+          ),
+        ),
+      ),
+      height: 80,
+      padding: const EdgeInsets.fromLTRB(16, 12, 16, 8),
+      child: Row(
+        children: [
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  AppFormat.currency(hotel.price.toDouble()),
+                  style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                        color: AppColor.secondary,
+                        fontWeight: FontWeight.w900,
+                      ),
+                ),
+                const Text(
+                  'per night',
+                  style: TextStyle(color: Colors.grey),
+                ),
+              ],
+            ),
+          ),
+          ButtonCustom(
+            label: 'Booking Now',
+            onTap: () {
+              Navigator.pushNamed(context, AppRoute.checkout, arguments: hotel);
+            },
+          )
+        ],
       ),
     );
   }
