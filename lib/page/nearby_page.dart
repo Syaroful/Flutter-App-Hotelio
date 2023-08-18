@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
 import 'package:hotelio/config/app_format.dart';
 
 import '../config/app_asset.dart';
 import '../config/app_color.dart';
+import '../config/app_route.dart';
 import '../controller/c_nearby.dart';
 import '../model/hotel.dart';
 
@@ -22,89 +24,7 @@ class NearbyPage extends StatelessWidget {
         const SizedBox(height: 30),
         categories(),
         const SizedBox(height: 30),
-        GetBuilder<CNearby>(builder: (_) {
-          List<Hotel> list = _.category == 'All Place'
-              ? _.listHotel
-              : _.listHotel
-                  .where((e) => e.category == cNearby.category)
-                  .toList();
-          if (list.isEmpty) return const Center(child: Text('No data'));
-          return ListView.builder(
-            itemCount: list.length,
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            itemBuilder: (context, index) {
-              Hotel hotel = list[index];
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  ClipRRect(
-                    borderRadius: const BorderRadius.only(
-                      topLeft: Radius.circular(20),
-                      topRight: Radius.circular(20),
-                    ),
-                    child: AspectRatio(
-                      aspectRatio: 16 / 9,
-                      child: Image.network(
-                        hotel.cover,
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  ),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              hotel.name,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .titleMedium!
-                                  .copyWith(
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                            const SizedBox(height: 4),
-                            Row(
-                              children: [
-                                Text(
-                                  'Start from ',
-                                  style: TextStyle(
-                                    color: Colors.grey,
-                                    fontSize: 13,
-                                  ),
-                                ),
-                                Text(
-                                  AppFormat.currency(hotel.price.toDouble()),
-                                  style: const TextStyle(
-                                    color: AppColor.secondary,
-                                    fontSize: 13,
-                                    fontWeight: FontWeight.w900,
-                                  ),
-                                ),
-                                Text(
-                                  '/night',
-                                  style: TextStyle(
-                                    color: Colors.grey,
-                                    fontSize: 13,
-                                  ),
-                                ),
-                              ],
-                            )
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              );
-            },
-          );
-        }),
+        hotel(cNearby: cNearby),
       ],
     );
   }
@@ -244,5 +164,137 @@ class NearbyPage extends StatelessWidget {
         ],
       ),
     );
+  }
+}
+
+class hotel extends StatelessWidget {
+  const hotel({
+    super.key,
+    required this.cNearby,
+  });
+
+  final CNearby cNearby;
+
+  @override
+  Widget build(BuildContext context) {
+    return GetBuilder<CNearby>(builder: (_) {
+      List<Hotel> list = _.category == 'All Place'
+          ? _.listHotel
+          : _.listHotel.where((e) => e.category == cNearby.category).toList();
+      if (list.isEmpty) return const Center(child: Text('No data'));
+      return ListView.builder(
+        itemCount: list.length,
+        shrinkWrap: true,
+        physics: const NeverScrollableScrollPhysics(),
+        itemBuilder: (context, index) {
+          Hotel hotel = list[index];
+          return GestureDetector(
+            onTap: () {
+              Navigator.pushNamed(context, AppRoute.detail, arguments: hotel);
+            },
+            child: Container(
+              margin: EdgeInsets.fromLTRB(
+                16,
+                index == 0 ? 0 : 8,
+                16,
+                index == list.length - 1 ? 16 : 8,
+              ),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  ClipRRect(
+                    borderRadius: const BorderRadius.only(
+                      topLeft: Radius.circular(20),
+                      topRight: Radius.circular(20),
+                    ),
+                    child: AspectRatio(
+                      aspectRatio: 16 / 9,
+                      child: Image.network(
+                        hotel.cover,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 12,
+                    ),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                hotel.name,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .titleMedium!
+                                    .copyWith(
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                              const SizedBox(height: 4),
+                              Row(
+                                children: [
+                                  const Text(
+                                    'Start from ',
+                                    style: TextStyle(
+                                      color: Colors.grey,
+                                      fontSize: 13,
+                                    ),
+                                  ),
+                                  Text(
+                                    AppFormat.currency(hotel.price.toDouble()),
+                                    style: const TextStyle(
+                                      color: AppColor.secondary,
+                                      fontSize: 13,
+                                      fontWeight: FontWeight.w900,
+                                    ),
+                                  ),
+                                  const Text(
+                                    '/night',
+                                    style: TextStyle(
+                                      color: Colors.grey,
+                                      fontSize: 13,
+                                    ),
+                                  ),
+                                ],
+                              )
+                            ],
+                          ),
+                        ),
+                        RatingBar.builder(
+                          initialRating: hotel.rate,
+                          minRating: 0,
+                          direction: Axis.horizontal,
+                          allowHalfRating: true,
+                          itemCount: 5,
+                          itemBuilder: (context, _) => const Icon(
+                            Icons.star_rate_rounded,
+                            color: Colors.amber,
+                          ),
+                          itemSize: 18,
+                          unratedColor: AppColor.starInActive,
+                          onRatingUpdate: (rating) {},
+                          ignoreGestures: true,
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          );
+        },
+      );
+    });
   }
 }

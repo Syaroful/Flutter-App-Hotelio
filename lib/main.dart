@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hotelio/config/app_color.dart';
 import 'package:hotelio/config/session.dart';
+import 'package:hotelio/page/detail_page.dart';
 import 'package:hotelio/page/home_page.dart';
 import 'package:hotelio/page/intro_page.dart';
 import 'package:hotelio/page/signin_page.dart';
@@ -18,7 +19,7 @@ Future<void> main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  initializeDateFormatting('en_US');
+  initializeDateFormatting('id');
   runApp(const MyApp());
 }
 
@@ -53,7 +54,7 @@ class MyApp extends StatelessWidget {
           AppRoute.intro: (context) => const IntroPage(),
           AppRoute.home: (context) => HomePage(),
           AppRoute.signin: (context) => SigninPage(),
-          AppRoute.detail: (context) => IntroPage(),
+          AppRoute.detail: (context) => DetailPage(),
           AppRoute.checkout: (context) => const IntroPage(),
           AppRoute.checkoutSuccess: (context) => const IntroPage(),
           AppRoute.detailBooking: (context) => const IntroPage(),
