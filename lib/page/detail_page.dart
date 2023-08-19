@@ -49,7 +49,7 @@ class DetailPage extends StatelessWidget {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.transparent,
-        foregroundColor: Colors.black,
+        foregroundColor: Colors.white,
         title: const Text(
           'Detail Page',
           style: TextStyle(
@@ -66,7 +66,7 @@ class DetailPage extends StatelessWidget {
       }),
       body: Container(
         decoration: const BoxDecoration(
-          color: Colors.white,
+          color: AppColor.darkBackgroundScaffold,
         ),
         child: ListView(
           children: [
@@ -79,7 +79,7 @@ class DetailPage extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Text(
                 hotel.description,
-                style: const TextStyle(fontSize: 16),
+                style: const TextStyle(fontSize: 16, color: Colors.white),
               ),
             ),
             const SizedBox(height: 16),
@@ -89,6 +89,7 @@ class DetailPage extends StatelessWidget {
                 'Facilities',
                 style: Theme.of(context).textTheme.titleLarge!.copyWith(
                       fontWeight: FontWeight.bold,
+                      color: Colors.white,
                     ),
               ),
             ),
@@ -100,6 +101,7 @@ class DetailPage extends StatelessWidget {
                 'Activities',
                 style: Theme.of(context).textTheme.titleLarge!.copyWith(
                       fontWeight: FontWeight.bold,
+                      color: Colors.white,
                     ),
               ),
             ),
@@ -115,7 +117,7 @@ class DetailPage extends StatelessWidget {
   Container viewReceipt() {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Colors.black,
         border: Border(
           top: BorderSide(color: Colors.grey[100]!, width: 1.5),
         ),
@@ -160,11 +162,11 @@ class DetailPage extends StatelessWidget {
   Container bookingNow(Hotel hotel, BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Colors.black,
         border: Border(
           top: BorderSide(
-            color: Colors.grey[200]!,
-            width: 1.5,
+            color: Colors.grey[700]!,
+            width: 1,
           ),
         ),
       ),
@@ -179,13 +181,15 @@ class DetailPage extends StatelessWidget {
                 Text(
                   AppFormat.currency(hotel.price.toDouble()),
                   style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                        color: AppColor.secondary,
+                        color: AppColor.primary,
                         fontWeight: FontWeight.w900,
                       ),
                 ),
                 const Text(
                   'per night',
-                  style: TextStyle(color: Colors.grey),
+                  style: TextStyle(
+                    color: Colors.grey,
+                  ),
                 ),
               ],
             ),
@@ -229,7 +233,10 @@ class DetailPage extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 6),
-                Text(activity['name']),
+                Text(
+                  activity['name'],
+                  style: const TextStyle(color: Colors.white),
+                ),
               ],
             ),
           );
@@ -252,7 +259,7 @@ class DetailPage extends StatelessWidget {
       itemBuilder: (context, index) {
         return Container(
           decoration: BoxDecoration(
-            border: Border.all(color: Colors.grey[200]!),
+            border: Border.all(color: Colors.grey[700]!),
             borderRadius: BorderRadius.circular(24),
           ),
           child: Column(
@@ -263,8 +270,13 @@ class DetailPage extends StatelessWidget {
                 color: AppColor.secondary,
               ),
               const SizedBox(height: 4),
-              Text(facilities[index]['label'],
-                  style: const TextStyle(fontSize: 13)),
+              Text(
+                facilities[index]['label'],
+                style: const TextStyle(
+                  fontSize: 13,
+                  color: Colors.grey,
+                ),
+              ),
             ],
           ),
         );
@@ -285,6 +297,7 @@ class DetailPage extends StatelessWidget {
                   hotel.name,
                   style: Theme.of(context).textTheme.titleLarge!.copyWith(
                         fontWeight: FontWeight.bold,
+                        color: Colors.white,
                       ),
                 ),
                 Text(
@@ -301,7 +314,7 @@ class DetailPage extends StatelessWidget {
             hotel.rate.toString(),
             style: const TextStyle(
               fontSize: 16,
-              color: Colors.black,
+              color: Colors.white,
               fontWeight: FontWeight.bold,
             ),
           ),

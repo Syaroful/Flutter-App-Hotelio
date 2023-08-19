@@ -59,6 +59,7 @@ class SigninPage extends StatelessWidget {
                           style:
                               Theme.of(context).textTheme.titleLarge!.copyWith(
                                     fontWeight: FontWeight.bold,
+                                    color: Colors.white,
                                   ),
                         ),
                       ),

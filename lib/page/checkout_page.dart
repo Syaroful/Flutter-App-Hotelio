@@ -19,7 +19,7 @@ class CheckoutPage extends StatelessWidget {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.transparent,
-        foregroundColor: Colors.black,
+        foregroundColor: Colors.white,
         title: const Text(
           'Checkout',
           style: TextStyle(
@@ -51,7 +51,7 @@ class CheckoutPage extends StatelessWidget {
   Container paymentMethod(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColor.dark,
         borderRadius: BorderRadius.circular(8),
       ),
       padding: const EdgeInsets.all(16),
@@ -62,14 +62,15 @@ class CheckoutPage extends StatelessWidget {
             'Payment Method',
             style: Theme.of(context).textTheme.titleMedium!.copyWith(
                   fontWeight: FontWeight.bold,
+                  color: Colors.white,
                 ),
           ),
           const SizedBox(height: 16),
           Container(
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: AppColor.dark,
               borderRadius: BorderRadius.circular(16),
-              border: Border.all(color: Colors.grey[300]!),
+              border: Border.all(color: Colors.grey[700]!),
             ),
             padding: const EdgeInsets.all(16),
             child: Row(
@@ -87,6 +88,7 @@ class CheckoutPage extends StatelessWidget {
                         'Master Card',
                         style: Theme.of(context).textTheme.titleSmall!.copyWith(
                               fontWeight: FontWeight.bold,
+                              color: Colors.white,
                             ),
                       ),
                       const SizedBox(height: 4),
@@ -94,7 +96,7 @@ class CheckoutPage extends StatelessWidget {
                         '**** **** **** 1234',
                         style: Theme.of(context).textTheme.titleSmall!.copyWith(
                               fontWeight: FontWeight.w200,
-                              color: Colors.grey[700],
+                              color: Colors.grey[100],
                             ),
                       ),
                     ],
@@ -112,7 +114,7 @@ class CheckoutPage extends StatelessWidget {
   Container bookDetail(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColor.dark,
         borderRadius: BorderRadius.circular(16),
       ),
       padding: const EdgeInsets.all(16),
@@ -123,6 +125,7 @@ class CheckoutPage extends StatelessWidget {
             'Room Details',
             style: Theme.of(context).textTheme.titleMedium!.copyWith(
                   fontWeight: FontWeight.bold,
+                  color: Colors.white,
                 ),
           ),
           const SizedBox(height: 16),
@@ -157,12 +160,15 @@ class CheckoutPage extends StatelessWidget {
       children: [
         Text(
           title,
-          style: Theme.of(context).textTheme.titleMedium,
+          style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                color: Colors.white,
+              ),
         ),
         Text(
           data,
           style: Theme.of(context).textTheme.titleMedium!.copyWith(
                 fontWeight: FontWeight.bold,
+                color: Colors.white,
               ),
         ),
       ],
@@ -172,7 +178,7 @@ class CheckoutPage extends StatelessWidget {
   Container header(Hotel hotel, BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColor.dark,
         borderRadius: BorderRadius.circular(8),
       ),
       padding: const EdgeInsets.all(16),
@@ -196,6 +202,7 @@ class CheckoutPage extends StatelessWidget {
                   hotel.name,
                   style: Theme.of(context).textTheme.titleMedium!.copyWith(
                         fontWeight: FontWeight.bold,
+                        color: Colors.white,
                       ),
                 ),
                 Text(hotel.location,
