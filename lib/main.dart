@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           textTheme: GoogleFonts.poppinsTextTheme(),
-          scaffoldBackgroundColor: AppColor.backgroundScaffold,
+          scaffoldBackgroundColor: AppColor.darkBackgroundScaffold,
           primaryColor: AppColor.primary,
           colorScheme: const ColorScheme.light(
             primary: AppColor.primary,

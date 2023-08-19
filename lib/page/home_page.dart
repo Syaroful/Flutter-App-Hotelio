@@ -33,7 +33,7 @@ class HomePage extends StatelessWidget {
         return Material(
           elevation: 8,
           child: Container(
-            color: Colors.white,
+            color: Colors.black,
             padding: const EdgeInsets.only(top: 8, bottom: 6),
             child: BottomNavigationBar(
               currentIndex: cHome.indexPage,
@@ -43,7 +43,7 @@ class HomePage extends StatelessWidget {
               type: BottomNavigationBarType.fixed,
               // 'fixed' unutk memunculkan label dari semua icon
               unselectedItemColor: Colors.grey,
-              selectedItemColor: Colors.black,
+              selectedItemColor: Colors.white,
               selectedIconTheme: const IconThemeData(
                 color: AppColor.primary,
               ),

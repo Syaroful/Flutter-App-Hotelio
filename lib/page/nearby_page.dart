@@ -46,7 +46,8 @@ class NearbyPage extends StatelessWidget {
                 0,
               ),
               child: Material(
-                color: category == _.category ? AppColor.primary : Colors.white,
+                color:
+                    category == _.category ? AppColor.secondary : AppColor.dark,
                 borderRadius: BorderRadius.circular(20),
                 child: InkWell(
                   borderRadius: BorderRadius.circular(20),
@@ -60,6 +61,7 @@ class NearbyPage extends StatelessWidget {
                       category,
                       style: Theme.of(context).textTheme.titleSmall!.copyWith(
                             fontWeight: FontWeight.w500,
+                            color: Colors.white,
                           ),
                     ),
                   ),
@@ -82,7 +84,7 @@ class NearbyPage extends StatelessWidget {
               height: 45,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(30),
-                color: Colors.white,
+                color: AppColor.dark,
               ),
               child: TextField(
                 decoration: InputDecoration(
@@ -147,10 +149,10 @@ class NearbyPage extends StatelessWidget {
             children: [
               Text(
                 'Near Me',
-                style: Theme.of(context)
-                    .textTheme
-                    .titleLarge!
-                    .copyWith(fontWeight: FontWeight.w900),
+                style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                      fontWeight: FontWeight.w900,
+                      color: Colors.white,
+                    ),
               ),
               const Text(
                 '23 hotels',
@@ -200,7 +202,7 @@ class hotel extends StatelessWidget {
                 index == list.length - 1 ? 16 : 8,
               ),
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: AppColor.dark,
                 borderRadius: BorderRadius.circular(20),
               ),
               child: Column(
@@ -237,6 +239,7 @@ class hotel extends StatelessWidget {
                                     .titleMedium!
                                     .copyWith(
                                       fontWeight: FontWeight.w600,
+                                      color: Colors.white,
                                     ),
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
@@ -254,7 +257,7 @@ class hotel extends StatelessWidget {
                                   Text(
                                     AppFormat.currency(hotel.price.toDouble()),
                                     style: const TextStyle(
-                                      color: AppColor.secondary,
+                                      color: AppColor.primary,
                                       fontSize: 13,
                                       fontWeight: FontWeight.w900,
                                     ),
