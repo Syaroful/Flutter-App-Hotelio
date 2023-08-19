@@ -3,10 +3,14 @@ import 'package:get/get.dart';
 import 'package:hotelio/config/app_asset.dart';
 import 'package:hotelio/config/app_color.dart';
 import 'package:hotelio/config/app_format.dart';
+import 'package:hotelio/model/booking.dart';
 import 'package:hotelio/widget/button_custom.dart';
+import 'package:intl/intl.dart';
 
+import '../config/app_route.dart';
 import '../controller/c_user.dart';
 import '../model/hotel.dart';
+import '../source/booking_source.dart';
 
 class CheckoutPage extends StatelessWidget {
   CheckoutPage({Key? key}) : super(key: key);
@@ -41,7 +45,32 @@ class CheckoutPage extends StatelessWidget {
           ButtonCustom(
             label: 'Proceed to Payment',
             isExpand: true,
-            onTap: () {},
+            onTap: () {
+              BookingSource.addBooking(
+                cUser.data.id!,
+                Booking(
+                    id: '',
+                    idHotel: hotel.id,
+                    cover: hotel.cover,
+                    name: hotel.name,
+                    location: hotel.location,
+                    date: DateFormat('yyyy-MM-dd').format(DateTime.now()),
+                    guest: 2,
+                    breakfast: 'included',
+                    checkInTime: '14:00 WIB',
+                    night: 2,
+                    serviceFee: 300000,
+                    activities: 0,
+                    totalPayment: hotel.price + 0 + 300000 + 0,
+                    status: 'PAID',
+                    isDone: false),
+              );
+              Navigator.pushNamed(
+                context,
+                AppRoute.checkoutSuccess,
+                arguments: hotel,
+              );
+            },
           )
         ],
       ),
