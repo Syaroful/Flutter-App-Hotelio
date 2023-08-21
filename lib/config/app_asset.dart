@@ -1,4 +1,4 @@
-class AppAsset{
+class AppAsset {
   static const logo = 'asset/logo.png';
   static const profile = 'asset/profile.png';
   static const bgIntro = 'asset/bg_intro.png';
@@ -12,4 +12,5 @@ class AppAsset{
   static const iconWifi = 'asset/icon_wifi.png';
   static const iconOffice = 'asset/icon_office.png';
   static const iconCoffee = 'asset/icon_coffee.png';
+  static const iconComingSoon = 'asset/icon_coming_soon.png';
 }

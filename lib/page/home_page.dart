@@ -6,6 +6,7 @@ import 'package:hotelio/page/history_page.dart';
 import 'package:hotelio/page/nearby_page.dart';
 
 import '../controller/c_home.dart';
+import '../widget/coming_soon.dart';
 
 class HomePage extends StatelessWidget {
   HomePage({Key? key}) : super(key: key);
@@ -25,14 +26,13 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Obx(() {
+        if (cHome.indexPage == 0) {
+          return NearbyPage();
+        }
         if (cHome.indexPage == 1) {
           return const HistoryPage();
-        } else if (cHome.indexPage == 2) {
-          return Center(child: const Text('Payment'));
-        } else if (cHome.indexPage == 3) {
-          return Center(child: const Text('Reward'));
         }
-        return NearbyPage();
+        return const ComingSoon();
       }),
       bottomNavigationBar: Obx(() {
         return Material(

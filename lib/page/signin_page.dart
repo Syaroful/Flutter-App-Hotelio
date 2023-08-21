@@ -68,15 +68,18 @@ class SigninPage extends StatelessWidget {
                         controller: controllerEmail,
                         validator: (value) =>
                             value == '' ? "Don't empty" : null,
+                        style: const TextStyle(color: Colors.white),
                         decoration: InputDecoration(
                           isDense: true,
                           filled: true,
-                          fillColor: Colors.white,
+                          fillColor: AppColor.dark,
+                          prefixIconColor: Colors.white,
                           contentPadding: const EdgeInsets.symmetric(
                             horizontal: 16,
                             vertical: 16,
                           ),
                           hintText: 'Email Address',
+                          hintStyle: const TextStyle(color: Colors.grey),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(30),
                           ),
@@ -97,15 +100,17 @@ class SigninPage extends StatelessWidget {
                         obscureText: true,
                         validator: (value) =>
                             value == '' ? "Don't empty" : null,
+                        style: const TextStyle(color: Colors.white),
                         decoration: InputDecoration(
                           isDense: true,
                           filled: true,
-                          fillColor: Colors.white,
+                          fillColor: AppColor.dark,
                           contentPadding: const EdgeInsets.symmetric(
                             horizontal: 16,
                             vertical: 16,
                           ),
                           hintText: 'Password',
+                          hintStyle: const TextStyle(color: Colors.grey),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(30),
                           ),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
 import 'package:hotelio/config/app_format.dart';
+import 'package:hotelio/config/session.dart';
 
 import '../config/app_asset.dart';
 import '../config/app_color.dart';
@@ -135,13 +136,29 @@ class NearbyPage extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(50),
-            child: Image.asset(
-              AppAsset.profile,
-              width: 50,
-              height: 50,
-              fit: BoxFit.cover,
+          GestureDetector(
+            onTap: () {
+              showMenu(
+                context: context,
+                position: const RelativeRect.fromLTRB(0, 140, 0, 0),
+                items: [
+                  const PopupMenuItem(value: 'logout', child: Text('Logout'))
+                ],
+              ).then((value) {
+                if (value == 'logout') {
+                  Session.clearUser();
+                  Navigator.pushReplacementNamed(context, AppRoute.signin);
+                }
+              });
+            },
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(50),
+              child: Image.asset(
+                AppAsset.profile,
+                width: 50,
+                height: 50,
+                fit: BoxFit.cover,
+              ),
             ),
           ),
           Column(
