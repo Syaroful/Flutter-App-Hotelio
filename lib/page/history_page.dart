@@ -167,13 +167,15 @@ class _HistoryPageState extends State<HistoryPage> {
                       color: Colors.white,
                     ),
               ),
-              const Text(
-                '1 transaction',
-                style: TextStyle(
-                  color: Colors.grey,
-                  fontSize: 12,
-                ),
-              ),
+              Obx(() {
+                return Text(
+                  '${cHistory.listBooking.length} transaction',
+                  style: const TextStyle(
+                    color: Colors.grey,
+                    fontSize: 12,
+                  ),
+                );
+              }),
             ],
           )
         ],

@@ -4,7 +4,6 @@
 
 list(APPEND FLUTTER_PLUGIN_LIST
   firebase_core
-  group_tablelist
 )
 
 list(APPEND FLUTTER_FFI_PLUGIN_LIST

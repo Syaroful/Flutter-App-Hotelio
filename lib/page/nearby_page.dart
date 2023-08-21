@@ -154,13 +154,15 @@ class NearbyPage extends StatelessWidget {
                       color: Colors.white,
                     ),
               ),
-              const Text(
-                '23 hotels',
-                style: TextStyle(
-                  color: Colors.grey,
-                  fontSize: 12,
-                ),
-              ),
+              Obx(() {
+                return Text(
+                  '${cNearby.listHotel.length} hotels',
+                  style: const TextStyle(
+                    color: Colors.grey,
+                    fontSize: 12,
+                  ),
+                );
+              }),
             ],
           )
         ],
