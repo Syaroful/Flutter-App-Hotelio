@@ -276,7 +276,7 @@ class DetailPage extends StatelessWidget {
             children: [
               ImageIcon(
                 AssetImage(facilities[index]['icon']),
-                color: AppColor.secondary,
+                color: AppColor.primary,
               ),
               const SizedBox(height: 4),
               Text(
